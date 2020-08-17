@@ -33,6 +33,9 @@ defmodule Honeybadger.Logger do
     full_context = Map.merge(details, context)
 
     case Keyword.get(metadata, :crash_reason) do
+      {%FunctionClauseError{module: :cow_uri, function: :urldecode}, _stacktrace} ->
+        :ok
+
       {reason, stacktrace} ->
         notify(reason, full_context, stacktrace)
 
